@@ -4,7 +4,7 @@ from .models import Receita
 # Create your views here.
 
 def index(request):
-    receitas = Receita.objects.order_by('data_receita').filter(publicada = True)
+    receitas = Receita.objects.order_by('-data_receita').filter(publicada = True)
     dados = {
         'receitas': receitas
     }
@@ -19,3 +19,17 @@ def receita(request, receita_id):
     }
 
     return render(request, 'receita.html', receita)
+
+def buscar(request):
+    receitas = Receita.objects.order_by('-data_receita').filter(publicada = True)
+
+    if 'buscar' in request.GET:
+        nome_a_receita = request.GET['buscar']  
+
+        if nome_a_receita:
+            lista = receitas.filter(nome_receita__icontains=nome_a_receita)
+
+    dados = {
+        'receitas': lista
+    }
+    return render(request, 'buscar.html', dados)
