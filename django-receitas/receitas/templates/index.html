@@ -34,7 +34,11 @@
                 {%for valor in receitas%}
                 <div class="col-12 col-sm-6 col-lg-4">
                     <div class="single-best-receipe-area mb-30">
-                        <img src="{% static 'img/bg-img/foto_receita.png' %}" alt="">
+                        {% if valor.foto_receita == null %}
+                            <img src="{% static 'img/bg-img/foto_receita.png' %}" alt="Imagem receita">
+                        {% else %}
+                            <img src="{{valor.foto_receita.url}}" alt="Imagem receita">  
+                        {% endif %}  
                         <div class="receipe-content">
                             <a href="{% url 'receita' valor.id %}">
                                 <h5>{{valor.nome_receita}}</h5>
